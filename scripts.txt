@@ -25,60 +25,127 @@ CREATE TABLE TAB_DIRECCION_CLIENTE(
 	ID_Canton NUMBER(3) NOT NULL,
 	ID_Distrito NUMBER(3) NOT NULL,
 	Especificaciones VARCHAR(250) NOT NULL,
-    CONSTRAINT PK_ID_Direccion_Cliente PRIMARY KEY (ID_Direccion_Cliente),
+--------------------------------------------------------------------------------
+------ CREACION DE TABLAS -------
+---TABLAS DE DIRECCIONES, PROVINCIAS, CANTONES Y DISTRITOS---
+
+--ADMINISTRADOR
+    CREATE TABLE TAB_Administrador(
+    ID_Administrador NUMBER(5) NOT NULL,
+    Nombre VARCHAR2(20),
+    Apellido_Paterno VARCHAR2(20),
+    Apellido_Materno VARCHAR2(20),
+    Telefono VARCHAR2(20),
+    CONSTRAINT PK_ID_ID_Administrador PRIMARY KEY (ID_Administrador));
+
+--CONSULTORIO
+CREATE TABLE TAB_Consultorio(
+    ID_Consultorio NUMBER(5) NOT NULL,
+    ID_Administrador NUMBER(5) NOT NULL,
+    Nombre_Consultorio VARCHAR2(50),
+    Dirrecion_Consultorio VARCHAR2(250),
+    Telefono VARCHAR2(50) NOT NULL,
+    CONSTRAINT PK_ID_Consultorio PRIMARY KEY (ID_Consultorio),
+    FOREIGN KEY (ID_Administrador) REFERENCES TAB_Administrador(ID_Administrador));
+    
+    
+--TABLAS DE DIRECCIONES, PROVINCIAS, CANTONES Y DISTRITOS---    
+CREATE TABLE TAB_Provincia(
+	ID_Provincia NUMBER(1) NOT NULL,
+	Provincia VARCHAR2(20) NOT NULL,
+    CONSTRAINT PK_ID_Provincia PRIMARY KEY (ID_Provincia));
+ 
+CREATE TABLE TAB_Canton(
+	ID_Canton NUMBER(3) NOT NULL,
+	Canton VARCHAR2(20) NOT NULL,
+    CONSTRAINT PK_ID_Canton PRIMARY KEY (ID_Canton));
+    
+ 
+CREATE TABLE TAB_Distrito(
+    ID_Distrito NUMBER(3) NOT NULL,
+    Distrito VARCHAR2(20) NOT NULL,
+    CONSTRAINT PK_ID_Distrito PRIMARY KEY (ID_Distrito));
+    
+    
+CREATE TABLE TAB_Direccion_Paciente(
+	ID_Direccion_Paciente NUMBER(5) NOT NULL,
+	ID_Provincia NUMBER(1) NOT NULL,
+	ID_Canton NUMBER(3) NOT NULL,
+	ID_Distrito NUMBER(3) NOT NULL,
+	Especificaciones VARCHAR(250) NOT NULL,
+    CONSTRAINT PK_ID_Direccion_Paciente PRIMARY KEY (ID_Direccion_Paciente),
 	FOREIGN KEY (ID_PROVINCIA) REFERENCES TAB_PROVINCIA(ID_PROVINCIA),
     FOREIGN KEY (ID_CANTON) REFERENCES TAB_CANTON(ID_CANTON),
     FOREIGN KEY (ID_DISTRITO) REFERENCES TAB_DISTRITO(ID_DISTRITO));
     
 ---ESTADO 
-CREATE TABLE Tab_Estado(
+CREATE TABLE TAB_Estado(
     ID_Estado NUMBER(1),
-    Gravedad CHAR(10));
+    Gravedad VARCHAR2(1),
+    CONSTRAINT PK_ID_Estado PRIMARY KEY (ID_Estado));
+ 
+---AREA
+    CREATE TABLE TAB_AREA(
+    ID_Area NUMBER(5),
+    Nombre_Area VARCHAR2(50),
+    CONSTRAINT PK_Area PRIMARY KEY (ID_Area));
+--SECRETARIA
+CREATE TABLE TAB_SECRETARIA(
+    ID_Secretaria NUMBER(5) NOT NULL,
+    Telefono VARCHAR2(50),
+    Nombre VARCHAR2(50),
+    Apellido_Paterno VARCHAR2(50),
+    Apellido_Materno VARCHAR2(50),
+    ID_Area NUMBER(5) NOT NULL,
+    CONSTRAINT PK_ID_Secretaria PRIMARY KEY (ID_Secretaria),
+    FOREIGN KEY (ID_Area) REFERENCES TAB_AREA(ID_Area)); 
+
+  
+--DOCTOR
+    CREATE TABLE TAB_DOCTOR(
+    ID_Doctor NUMBER(5) NOT NULL,
+    Nombre VARCHAR2(50),
+    Apellido_Paterno VARCHAR2(50),
+    Apellido_Materno VARCHAR2(50),
+    ID_Area NUMBER(5),
+    Telefono VARCHAR2(50),
+    CONSTRAINT PK_ID_Doctor PRIMARY KEY (ID_Doctor),
+    FOREIGN KEY (ID_Area) REFERENCES Tab_Area(ID_Area));    
+    
+---PRDOUCTO
+    CREATE TABLE TAB_Productos(
+    ID_Producto NUMBER(5) NOT NULL,
+    Nombre_Producto VARCHAR2(50),
+    Cantidad_Producto NUMBER(12),
+    Categoria_Producto VARCHAR2(20),
+    ID_Area NUMBER(5) NOT NULL,
+    CONSTRAINT PK_ID_Producto PRIMARY KEY (ID_Producto),
+    FOREIGN KEY (ID_Area) REFERENCES TAB_AREA(ID_Area)); 
+    
     
 ---Paciente
 CREATE TABLE TAB_Paciente(
     ID_Paciente NUMBER(5) NOT NULL,
-    ID_Estado NUMBER(5) NOT NULL,
+    ID_Estado NUMBER(1) NOT NULL,
     ID_Direccion Number(5) NOT NULL,
     Nombre VARCHAR2(50),
     Apellido_Paterno VARCHAR2(50),
     Apellido_Materno VARCHAR2(50),
     Telefono VARCHAR2(50),
     Email VARCHAR2(50),
-    CONSTRAINT PK_ID_Cliente PRIMARY KEY (ID_CLIENTE),
+    CONSTRAINT PK_ID_Paciente PRIMARY KEY (ID_Paciente),
     FOREIGN KEY (ID_Estado) REFERENCES Tab_Estado(ID_Estado),
-	FOREIGN KEY (ID_Direccion) REFERENCES TAB_DIRECCION_CLIENTE(ID_Direccion_Cliente));
+	FOREIGN KEY (ID_Direccion) REFERENCES TAB_Direccion_Paciente(ID_Direccion_Paciente));
 
---AREA
-    CREATE TABLE AREA(
-    ID_Area NUMBER(5),
-    Area VARCHAR2(50)
-    CONSTRAINT PK_Area PRIMARY KEY (Area));
-
-
-
---DOCTOR
-    CREATE TABLE DOCTOR(
-    ID_Doctor NUMBER(5) NOT NULL,
-    Nombre VARCHAR(50),
-    Apellido_Paterno VARCHAR(50),
-    Apellido_Materno VARCHAR(50),
-    ID_Area NUMBER(50),
-    Telefono VARCHAR(50),
-    CONSTRAINT PK_ID_Doctor PRIMARY KEY (ID_Doctor),
-    FOREIGN KEY (ID_Area) REFERENCES Tab_Area(ID_Area));
-    
-    
-    
 
 --CITAS
-CREATE TABLE Tab_Citas(
+CREATE TABLE TAB_Citas(
     ID_Citas NUMBER(5) NOT NULL,
     ID_Doctor NUMBER(5) NOT NULL,
     Fecha DATE,
     ID_Consultorio NUMBER(5) NOT NULL,
     ID_Paciente NUMBER(5) NOT NULL,
     CONSTRAINT PK_ID_Citas PRIMARY KEY (ID_Citas),
-    FOREIGN KEY (ID_Doctor) REFERENCES Tab_Estado(ID_Doctor),
-	FOREIGN KEY (ID_Consultorio) REFERENCES TAB_DIRECCION_CLIENTE(ID_Consultorio))
+    FOREIGN KEY (ID_Doctor) REFERENCES TAB_DOCTOR(ID_Doctor),
+	FOREIGN KEY (ID_Consultorio) REFERENCES TAB_Consultorio(ID_Consultorio),
 	FOREIGN KEY (ID_Paciente) REFERENCES TAB_Paciente(ID_Paciente));
