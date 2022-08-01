@@ -1,3 +1,5 @@
+New Script
+
 -------------------------------SYSTEM -------------------------------------------------
 -------------------------------TABLESPACES---------------------------------------------
 CREATE TABLESPACE hospital DATAFILE 'C:/Direccion/hospital01.dbf' SIZE 2M DEFAULT STORAGE (INITIAL 1M NEXT 1M PCTINCREASE 0);
@@ -237,3 +239,173 @@ FROM DBA_PRIV_AUDIT_OPTS;
 
 DESC DBA_PRIV_AUDIT_OPTS;
 GRANT CREATE TABLE TO ADMINISTRADOR;
+
+
+ ------------------------------------INSERTS---------------------------------------------
+    ---ADMINISTRADOR
+    insert into TAB_Administrador(ID_Administrador, Nombre, Apellido_Paterno, Apellido_Materno, Telefono)
+    values (01, 'Luis', 'Pacheco', 'Medina', 1234-5678);
+    
+    ---CONSULTORIO
+    insert into TAB_Consultorio(ID_Consultorio, ID_Administrador, Nombre_Consultorio, Dirrecion_Consultorio,
+    Telefono)
+    values (11, 01, 'Mundo Sano', '50m sur del parque central de Alajuela', '1111-1111');
+    
+    insert into TAB_Consultorio(ID_Consultorio, ID_Administrador, Nombre_Consultorio, Dirrecion_Consultorio,
+    Telefono)
+    values (22, 01, 'Focus Med', 'Del Mega Super de San Sebastian 800m norte, 200m este', '2222-2222');
+    
+    insert into TAB_Consultorio(ID_Consultorio, ID_Administrador, Nombre_Consultorio, Dirrecion_Consultorio,
+    Telefono)
+    values (33, 01, 'Prisma', 'De los bomberos de tibas 500m sur, 200m oeste y 50m norte', '3333-3333');
+    
+    insert into TAB_Consultorio(ID_Consultorio, ID_Administrador, Nombre_Consultorio, Dirrecion_Consultorio,
+    Telefono)
+    values (44,01, 'Epix Salud', 'Contiguo a la iglesia Parroquia Sagrado Corazon de Jesus en Heredia', '4444-4444');
+    
+    insert into TAB_Consultorio(ID_Consultorio, ID_Administrador, Nombre_Consultorio, Dirrecion_Consultorio,
+    Telefono)
+    values (55,01, 'Salud Universal', 'De la terminal de buses Puntarenas - San Jose, 100m este, 200m norte', '5555-5555');
+    
+    ----PROVINCIAS
+    insert all
+    insert into TAB_Provincia(ID_Provincia, Provincia) values (1, 'San Jose')
+    insert into TAB_Provincia(ID_Provincia, Provincia) values (2, 'Alajuela')
+    insert into TAB_Provincia(ID_Provincia, Provincia) values (3, 'Cartago')
+    insert into TAB_Provincia(ID_Provincia, Provincia) values (4, 'Heredia')
+    insert into TAB_Provincia(ID_Provincia, Provincia) values (5, 'Guanacaste')
+    insert into TAB_Provincia(ID_Provincia, Provincia) values (6, 'Puntarenas')
+    insert into TAB_Provincia(ID_Provincia, Provincia) values (7, 'Limon')
+    SELECT * FROM DUAL;
+    
+    ---CANTON
+    INSERT ALL
+    INTO TAB_Canton(ID_Canton, Canton) VALUES (1, 'Tibas')
+    INTO TAB_Canton(ID_Canton, Canton) VALUES (2, 'Grecia')
+    INTO TAB_Canton(ID_Canton, Canton) VALUES (3, 'El Guarco')
+    INTO TAB_Canton(ID_Canton, Canton) VALUES (4, 'Barva')
+    INTO TAB_Canton(ID_Canton, Canton) VALUES (5, 'Liberia')
+    INTO TAB_Canton(ID_Canton, Canton) VALUES (6, 'Quepos')
+    INTO TAB_Canton(ID_Canton, Canton) VALUES (7, 'Siquirres')
+    SELECT * FROM DUAL;
+    
+    ---DISTRITO
+    INSERT ALL
+    INTO TAB_Distrito(ID_Distrito, Distrito) VALUES (1, 'Cinco Esquinas')
+    INTO TAB_Distrito(ID_Distrito, Distrito) VALUES (2, 'San Isidro')
+    INTO TAB_Distrito(ID_Distrito, Distrito) VALUES (3, 'Tejar')
+    INTO TAB_Distrito(ID_Distrito, Distrito) VALUES (4, 'San Pedro')
+    INTO TAB_Distrito(ID_Distrito, Distrito) VALUES (5, 'Cañas Dulces')
+    INTO TAB_Distrito(ID_Distrito, Distrito) VALUES (6, 'Naranjito')
+    INTO TAB_Distrito(ID_Distrito, Distrito) VALUES (7, 'Pacuarito')
+    SELECT * FROM DUAL;
+    
+    ---DIRECCION PACIENTE
+    INSERT ALL
+    INTO TAB_Direccion_Paciente(ID_Direccion_Paciente, ID_Provincia, ID_Canton, ID_Distrito, Especificaciones) 
+    VALUES (01,01,01,01,'Casa esquinera de dos plantas')
+    INTO TAB_Direccion_Paciente(ID_Direccion_Paciente, ID_Provincia, ID_Canton, ID_Distrito, Especificaciones) 
+    VALUES (02,02,02,02,'Casa porton peatonal amarillo')
+    INTO TAB_Direccion_Paciente(ID_Direccion_Paciente, ID_Provincia, ID_Canton, ID_Distrito, Especificaciones) 
+    VALUES (03,03,03,03,'Residencial Tramonto, casa numero 6')
+    INTO TAB_Direccion_Paciente(ID_Direccion_Paciente, ID_Provincia, ID_Canton, ID_Distrito, Especificaciones) 
+    VALUES (04,04,04,04,'Condominios El Sitio casa #57')
+    INTO TAB_Direccion_Paciente(ID_Direccion_Paciente, ID_Provincia, ID_Canton, ID_Distrito, Especificaciones) 
+    VALUES (05,05,05,05,'Apartamentos Villas del Norte, apt #15')
+    INTO TAB_Direccion_Paciente(ID_Direccion_Paciente, ID_Provincia, ID_Canton, ID_Distrito, Especificaciones) 
+    VALUES (06,06,06,06,'Casa de muro naranja con verjas negras')
+    INTO TAB_Direccion_Paciente(ID_Direccion_Paciente, ID_Provincia, ID_Canton, ID_Distrito, Especificaciones) 
+    VALUES (07,07,07,07,'Casa blanca de dos plantas con balcon y vista al mar')
+    SELECT * FROM DUAL;
+    
+    ---ESTADO   (E=Estable, G=Grave, A=Amarillo)
+    INSERT ALL
+    INTO TAB_Estado(ID_Estado, Gravedad) VALUES (1, 'E')
+    INTO TAB_Estado(ID_Estado, Gravedad) VALUES (2, 'G')
+    INTO TAB_Estado(ID_Estado, Gravedad) VALUES (3, 'A')
+    SELECT * FROM DUAL;
+    
+    ---AREA
+    INSERT ALL
+    INTO TAB_AREA(ID_Area, Nombre_Area) VALUES (911, 'Urgencias')
+    INTO TAB_AREA(ID_Area, Nombre_Area) VALUES (444, 'Radiologia')
+    INTO TAB_AREA(ID_Area, Nombre_Area) VALUES (777, 'Chequeo General')
+    INTO TAB_AREA(ID_Area, Nombre_Area) VALUES (000, 'Traumatologia')
+    INTO TAB_AREA(ID_Area, Nombre_Area) VALUES (123, 'Farmacia')
+    SELECT * FROM DUAL;
+    
+    ---SECRETARIA
+    INSERT ALL
+    INTO TAB_SECRETARIA(ID_Secretaria, Telefono, Nombre, Apellido_Paterno, Apellido_Materno, ID_Area) 
+    VALUES (0011, '8991-5445', 'Marcela', 'Murillo', 'Rojas', 777)
+    SELECT * FROM DUAL;
+    
+    ---DOCTOR
+    INSERT ALL
+    INTO TAB_DOCTOR(ID_Doctor, Nombre, Apellido_Paterno, Apellido_Materno, ID_Area, Telefono) VALUES (01, 'Roger', 'Montero', 'Vindas', 444, '7765-9871')
+    INTO TAB_DOCTOR(ID_Doctor, Nombre, Apellido_Paterno, Apellido_Materno, ID_Area, Telefono) VALUES (02, 'Diana', 'Fonseca', 'Morales', 777, '9854-5490')
+    INTO TAB_DOCTOR(ID_Doctor, Nombre, Apellido_Paterno, Apellido_Materno, ID_Area, Telefono) VALUES (03, 'Gloriana', 'Montoya', 'Fallas', 911, '5880-9191')
+    INTO TAB_DOCTOR(ID_Doctor, Nombre, Apellido_Paterno, Apellido_Materno, ID_Area, Telefono) VALUES (04, 'Fabian', 'Lopez', 'Artavia', 000, '8452-2460')
+    INTO TAB_DOCTOR(ID_Doctor, Nombre, Apellido_Paterno, Apellido_Materno, ID_Area, Telefono) VALUES (05, 'Roxana', 'Cruz', 'Esquivel', 123, '2245-0880')
+    SELECT * FROM DUAL;
+    
+    ---PRODUCTO
+    INSERT ALL
+    INTO TAB_Productos(ID_Producto, Nombre_Producto, Cantidad_Producto, Categoria_Producto, ID_Area)
+    VALUES (01, 'Diazepan', 20000, 'Urgencias', 911)
+    INTO TAB_Productos(ID_Producto, Nombre_Producto, Cantidad_Producto, Categoria_Producto, ID_Area)
+    VALUES (02, 'Dopamina', 20000, 'Urgencias', 911)
+    INTO TAB_Productos(ID_Producto, Nombre_Producto, Cantidad_Producto, Categoria_Producto, ID_Area)
+    VALUES (03, 'Lidocaina', 50000, 'Urgencias', 911)
+    INTO TAB_Productos(ID_Producto, Nombre_Producto, Cantidad_Producto, Categoria_Producto, ID_Area)
+    VALUES (04, 'Ibuprofeno', 10000, 'Chequeo General', 777)
+    INTO TAB_Productos(ID_Producto, Nombre_Producto, Cantidad_Producto, Categoria_Producto, ID_Area)
+    VALUES (05, 'Loratadina', 25000, 'Chequeo General', 777)
+    INTO TAB_Productos(ID_Producto, Nombre_Producto, Cantidad_Producto, Categoria_Producto, ID_Area)
+    VALUES (06, 'Acetaminofen', 15000, 'Chequeo General', 777)
+    INTO TAB_Productos(ID_Producto, Nombre_Producto, Cantidad_Producto, Categoria_Producto, ID_Area)
+    VALUES (07, 'Aspirina', 10000, 'Chequeo General', 777)
+    INTO TAB_Productos(ID_Producto, Nombre_Producto, Cantidad_Producto, Categoria_Producto, ID_Area)
+    VALUES (08, 'Penicilina', 10000, 'Traumatologia', 000)
+    INTO TAB_Productos(ID_Producto, Nombre_Producto, Cantidad_Producto, Categoria_Producto, ID_Area)
+    VALUES (09, 'Cefazolina', 30000, 'Traumatologia', 000)
+    INTO TAB_Productos(ID_Producto, Nombre_Producto, Cantidad_Producto, Categoria_Producto, ID_Area)
+    VALUES (10, 'Paracetamol', 45000, 'Traumatologia', 000)
+    SELECT * FROM DUAL;
+    
+    ---PACIENTE
+    INSERT ALL 
+    INTO TAB_Paciente(ID_Paciente, ID_Estado, ID_Direccion, Nombre, Apellido_Paterno, Apellido_Materno, Telefono, Email)
+    VALUES (01, 1, 01, 'Ramon', 'Perez', 'Escalante', '8841-2796', 'rampee@gmail.com')
+    INTO TAB_Paciente(ID_Paciente, ID_Estado, ID_Direccion, Nombre, Apellido_Paterno, Apellido_Materno, Telefono, Email)
+    VALUES (02, 3, 02, 'Liza', 'Lopez', 'Zamora', '7231-4426', 'liloza@gmail.com')
+    INTO TAB_Paciente(ID_Paciente, ID_Estado, ID_Direccion, Nombre, Apellido_Paterno, Apellido_Materno, Telefono, Email)
+    VALUES (03, 1, 03, 'David', 'Porras', 'Jaen', '5577-9021', 'davidpoja@gmail.com')
+    INTO TAB_Paciente(ID_Paciente, ID_Estado, ID_Direccion, Nombre, Apellido_Paterno, Apellido_Materno, Telefono, Email)
+    VALUES (04, 2, 04, 'Veronica', 'Tencio', 'Cascante', '8850-0026', 'verotecas@gmail.com')
+    INTO TAB_Paciente(ID_Paciente, ID_Estado, ID_Direccion, Nombre, Apellido_Paterno, Apellido_Materno, Telefono, Email)
+    VALUES (05, 2, 05, 'Guillermo', 'Ruiz', 'Artavia', '5871-6060', 'guirui@gmail.com')
+    INTO TAB_Paciente(ID_Paciente, ID_Estado, ID_Direccion, Nombre, Apellido_Paterno, Apellido_Materno, Telefono, Email)
+    VALUES (06, 3, 06, 'Fiorela', 'Poveda', 'Lara', '4115-1646', 'fiopola@gmail.com')
+    INTO TAB_Paciente(ID_Paciente, ID_Estado, ID_Direccion, Nombre, Apellido_Paterno, Apellido_Materno, Telefono, Email)
+    VALUES (07, 2, 07, 'Cristopher', 'De La Cruz', 'Gonzalez', '8841-2796', 'crisgoncruz@gmail.com')
+    SELECT * FROM DUAL;
+    
+    ---CITAS
+    INSERT ALL
+    INTO TAB_Citas(ID_Citas, ID_Doctor, Fecha, ID_Consultorio, ID_Paciente) 
+    VALUES (01, 02, (to_date('28/11/2022','dd.mm/yyyy')), 11, 01)
+    INTO TAB_Citas(ID_Citas, ID_Doctor, Fecha, ID_Consultorio, ID_Paciente) 
+    VALUES (02, 03, (to_date('13/03/2023','dd.mm/yyyy')), 22, 02)
+    INTO TAB_Citas(ID_Citas, ID_Doctor, Fecha, ID_Consultorio, ID_Paciente) 
+    VALUES (03, 05, (to_date('05/05/2023','dd.mm/yyyy')), 33, 03)
+    INTO TAB_Citas(ID_Citas, ID_Doctor, Fecha, ID_Consultorio, ID_Paciente) 
+    VALUES (04, 04, (to_date('30/06/2023','dd.mm/yyyy')), 44, 04)
+    INTO TAB_Citas(ID_Citas, ID_Doctor, Fecha, ID_Consultorio, ID_Paciente) 
+    VALUES (05, 03, (to_date('12/10/2023','dd.mm/yyyy')), 22, 05)
+    INTO TAB_Citas(ID_Citas, ID_Doctor, Fecha, ID_Consultorio, ID_Paciente) 
+    VALUES (06, 01, (to_date('18/10/2023','dd.mm/yyyy')), 55, 06)
+    INTO TAB_Citas(ID_Citas, ID_Doctor, Fecha, ID_Consultorio, ID_Paciente) 
+    VALUES (07, 04, (to_date('09/12/2023','dd.mm/yyyy')), 44, 07)
+    SELECT * FROM DUAL;
+     
