@@ -68,7 +68,7 @@ COMPOSITE_LIMIT 5000000;
 alter user SECRETARIA profile PERFIL_SECRETARIA;
 
 -------------------------------ADMINISTRADOR---------------------------------------------
---------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 ------ CREACION DE TABLAS -------
 ---TABLAS DE DIRECCIONES, PROVINCIAS, CANTONES Y DISTRITOS---
 
@@ -192,3 +192,48 @@ CREATE TABLE TAB_Citas(
     FOREIGN KEY (ID_Doctor) REFERENCES TAB_DOCTOR(ID_Doctor),
 	FOREIGN KEY (ID_Consultorio) REFERENCES TAB_Consultorio(ID_Consultorio),
 	FOREIGN KEY (ID_Paciente) REFERENCES TAB_Paciente(ID_Paciente));
+
+-------------------------------AUDITORIA---------------------------------------------
+--Checkeamos si podemos auditar--
+select * from v$parameter where name = 'audit_trail';
+--En caso de que no, corremos el siguiente comando:
+alter system set audit_trail='DB' scope =spfile;
+
+--Activacion de sentencias para usuario Administrador
+AUDIT INSERT TABLE, UPDATE TABLE BY ADMINISTRADOR BY ACCESS;
+
+GRANT DBA TO ADMINISTRADOR;
+AUDIT CONNECT;
+AUDIT CREATE USER BY ADMINISTRADOR BY ACCESS;
+
+select substr(username,1,10),substr(action_name,1,20)
+from DBA_AUDIT_OBJECT;
+
+select username,to_char(timestamp,'DD-MM-YYYY:HH24:MI:SS'), action_name
+from dba_audit_object
+where username = 'ADMINISTRADOR' AND
+ACTION_NAME = 'UPDATE' AND 
+to_date(TIMESTAMP,'DD-MM-YYYY') = to_date(sysdate, 'DD-MM-YYYY')
+ORDER BY to_char(timestamp,'DD-MM-YYYY:HH24:MI:SS');
+
+
+SELECT * FROM DBA_AUDIT_OBJECT;
+
+SELECT  SUBSTR(USERNAME,1,10),
+        SUBSTR(TERMINAL,1,10),
+        SUBSTR(TIMESTAMP,1,10),
+        SUBSTR(OBJ_NAME,1,10),
+        SUBSTR(ACTION_NAME,1,20) ACCION
+FROM DBA_AUDIT_TRAIL
+WHERE OWNER = 'ADMINISTRADOR' AND
+to_date(TIMESTAMP,'DD-MM-YYYY') = to_date(sysdate, 'DD-MM-YYYY') AND
+ACTION_NAME = 'UPDATE';
+
+SELECT  SUBSTR(USER_NAME,1,10),
+        SUBSTR(PRIVILEGE,1,10),
+        SUBSTR(SUCCESS,1,10),
+        SUBSTR(FAILURE,1,10)
+FROM DBA_PRIV_AUDIT_OPTS;
+
+DESC DBA_PRIV_AUDIT_OPTS;
+GRANT CREATE TABLE TO ADMINISTRADOR;
