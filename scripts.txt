@@ -198,7 +198,8 @@ CREATE TABLE TAB_Citas(
 -------------------------------AUDITORIA---------------------------------------------
 --Checkeamos si podemos auditar--
 select * from v$parameter where name = 'audit_trail';
---En caso de que no, corremos el siguiente comando:
+
+--Activar Auditoria--
 alter system set audit_trail='DB' scope =spfile;
 
 --Activacion de sentencias para usuario Administrador
@@ -217,7 +218,6 @@ where username = 'ADMINISTRADOR' AND
 ACTION_NAME = 'UPDATE' AND 
 to_date(TIMESTAMP,'DD-MM-YYYY') = to_date(sysdate, 'DD-MM-YYYY')
 ORDER BY to_char(timestamp,'DD-MM-YYYY:HH24:MI:SS');
-
 
 SELECT * FROM DBA_AUDIT_OBJECT;
 
